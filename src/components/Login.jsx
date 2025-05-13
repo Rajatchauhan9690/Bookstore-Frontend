@@ -19,6 +19,7 @@ const LoginPage = () => {
     };
 
     console.log("Submitted:", userInfo);
+    console.log("kapil");
   };
 
   return (

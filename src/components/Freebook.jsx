@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import list from "../assets/list.json";
-
+import axios from "axios";
 import Cards from "./Cards";
 function Freebook() {
-  // const [book, setBook] = useState([]);
-  // useEffect(() => {
-  //   const getBook = async () => {
-  //     try {
-  //       const res = await axios.get("http://localhost:4001/book");
+  const [book, setBook] = useState([]);
+  useEffect(() => {
+    const getBook = async () => {
+      try {
+        const res = await axios.get("api/v1/book");
+        // console.log(res);
 
-  //       const data = res.data.filter((data) => data.category === "Free");
-  //       console.log(data);
-  //       setBook(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getBook();
-  // }, []);
+        const data = res.data.filter((data) => data.category === "Free");
+
+        setBook(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getBook();
+  }, []);
   // console.log(filterData);
   // var settings = {
   //   dots: true,
@@ -67,11 +67,9 @@ function Freebook() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-4">
-          {list
-            .filter((item) => item.category === "Free")
-            .map((item) => (
-              <Cards item={item} key={item.id} />
-            ))}
+          {book.map((item) => (
+            <Cards key={item.id} item={item} />
+          ))}
         </div>
       </div>
     </>

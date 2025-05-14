@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 const LoginPage = () => {
-  const navigate = useNavigate(); // Moved to top level
+  const navigate = useNavigate();
   const handleClose = () => {
     navigate("/");
   };
@@ -14,11 +16,23 @@ const LoginPage = () => {
 
   const onSubmit = async (data) => {
     const userInfo = {
-      email: data.email,
-      password: data.password,
+      Email: data.Email,
+      Password: data.Password,
     };
-
-    console.log("Submitted:", userInfo);
+    await axios
+      .post("api/v1/login", userInfo)
+      .then((res) => {
+        if (res.data?.user) {
+          localStorage.setItem("Users", JSON.stringify(res.data.user));
+          toast.success("Login Successfully");
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          toast.error("Error: " + err.response.data.message);
+        }
+      });
   };
 
   return (
@@ -47,7 +61,7 @@ const LoginPage = () => {
                 className="w-full py-2 bg-transparent focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your email"
                 autoComplete="off"
-                {...register("email", { required: true })}
+                {...register("Email", { required: true })}
               />
             </div>
             {errors.email && (
@@ -63,7 +77,7 @@ const LoginPage = () => {
                 className="w-full py-2 bg-transparent  focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your password"
                 autoComplete="off"
-                {...register("password", { required: true })}
+                {...register("Password", { required: true })}
               />
             </div>
             {errors.password && (

@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 const SignupPage = () => {
   const navigate = useNavigate();
 
@@ -16,11 +18,24 @@ const SignupPage = () => {
 
   const onSubmit = async (data) => {
     const userInfo = {
-      fullname: data.fullname,
-      email: data.email,
-      password: data.password,
+      FullName: data.FullName,
+      Email: data.Email,
+      Password: data.Password,
     };
-    console.log(userInfo);
+    await axios
+      .post("api/v1/register", userInfo)
+      .then((res) => {
+        if (res.data?.user) {
+          localStorage.setItem("Users", JSON.stringify(res.data.user));
+          toast.success("Signup Successfully");
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          toast.error("Error: " + err.response.data.message);
+        }
+      });
   };
   return (
     <div className="flex items-center justify-center min-h-screen ">
@@ -47,7 +62,7 @@ const SignupPage = () => {
                 type="text"
                 className="w-full py-2 bg-transparent focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your name"
-                {...register("fullname", { required: true })}
+                {...register("FullName", { required: true })}
               />
             </div>
 
@@ -66,7 +81,7 @@ const SignupPage = () => {
                 type="email"
                 className="w-full py-2 bg-transparent focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your email"
-                {...register("email", { required: true })}
+                {...register("Email", { required: true })}
               />
             </div>
             {errors.email && (
@@ -85,7 +100,7 @@ const SignupPage = () => {
                 className="w-full py-2 bg-transparent  focus:outline-none text-sm sm:text-base"
                 placeholder="Create a password"
                 autoComplete="off"
-                {...register("password", { required: true })}
+                {...register("Password", { required: true })}
               />
             </div>
             {errors.password && (

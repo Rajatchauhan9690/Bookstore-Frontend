@@ -16,8 +16,8 @@ const LoginPage = () => {
 
   const onSubmit = async (data) => {
     const userInfo = {
-      Email: data.Email,
-      Password: data.Password,
+      email: data.email,
+      password: data.password,
     };
     await axios
       .post("api/v1/login", userInfo)
@@ -26,6 +26,9 @@ const LoginPage = () => {
           localStorage.setItem("Users", JSON.stringify(res.data.user));
           toast.success("Login Successfully");
           navigate("/");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         }
       })
       .catch((err) => {
@@ -60,8 +63,7 @@ const LoginPage = () => {
                 type="email"
                 className="w-full py-2 bg-transparent focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your email"
-                autoComplete="off"
-                {...register("Email", { required: true })}
+                {...register("email", { required: true })}
               />
             </div>
             {errors.email && (
@@ -76,8 +78,7 @@ const LoginPage = () => {
                 type="password"
                 className="w-full py-2 bg-transparent  focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your password"
-                autoComplete="off"
-                {...register("Password", { required: true })}
+                {...register("password", { required: true })}
               />
             </div>
             {errors.password && (

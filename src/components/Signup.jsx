@@ -18,9 +18,9 @@ const SignupPage = () => {
 
   const onSubmit = async (data) => {
     const userInfo = {
-      FullName: data.FullName,
-      Email: data.Email,
-      Password: data.Password,
+      fullName: data.fullName,
+      email: data.email,
+      password: data.password,
     };
     await axios
       .post("api/v1/register", userInfo)
@@ -62,7 +62,7 @@ const SignupPage = () => {
                 type="text"
                 className="w-full py-2 bg-transparent focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your name"
-                {...register("FullName", { required: true })}
+                {...register("fullName", { required: true })}
               />
             </div>
 
@@ -74,14 +74,14 @@ const SignupPage = () => {
           </div>
 
           <div>
-            <label className="block mb-1">Email</label>
+            <label className="block mb-1">email</label>
             <div className="flex items-center border border-gray-300 rounded-md px-3">
               <i className="fas fa-envelope text-gray-400 mr-2"></i>
               <input
                 type="email"
                 className="w-full py-2 bg-transparent focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your email"
-                {...register("Email", { required: true })}
+                {...register("email", { required: true })}
               />
             </div>
             {errors.email && (
@@ -100,7 +100,7 @@ const SignupPage = () => {
                 className="w-full py-2 bg-transparent  focus:outline-none text-sm sm:text-base"
                 placeholder="Create a password"
                 autoComplete="off"
-                {...register("Password", { required: true })}
+                {...register("password", { required: true })}
               />
             </div>
             {errors.password && (

@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useTheme from "../hooks/useTheme";
+import { useAuth } from "../context/AuthProvider";
+import Logout from "./Logout";
 
 const Navbar = () => {
+  const [authUser, setAuthUser] = useAuth();
+
   const [sticky, setSticky] = useState(false);
   const [theme, setTheme] = useTheme();
 
@@ -85,11 +89,15 @@ const Navbar = () => {
             <i className="fas fa-moon swap-on text-gray-700 text-2xl"></i>
           </label>
 
-          <div className="navbar-end">
-            <Link to="/login" className="btn text-xl">
-              Login
-            </Link>
-          </div>
+          {authUser ? (
+            <Logout />
+          ) : (
+            <div className="navbar-end">
+              <Link to="/login" className="btn text-xl">
+                Login
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

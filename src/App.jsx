@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import useTheme from "./hooks/useTheme.js";
 import Layout from "./components/Layout.jsx";
 import About from "./components/About.jsx";
@@ -10,9 +10,13 @@ import Freebook from "./components/Freebook.jsx";
 import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import { Toaster } from "react-hot-toast";
+
 import "./App.css";
+import { useAuth } from "./context/AuthProvider.jsx";
 function App() {
   const [theme] = useTheme();
+  const [authUser, setAuthUser] = useAuth();
+  console.log(authUser);
 
   return (
     <div>
@@ -30,7 +34,10 @@ function App() {
           />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/course" element={<Course />} />
+          <Route
+            path="/course"
+            element={authUser ? <Course /> : <Navigate to="/signup" />}
+          />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

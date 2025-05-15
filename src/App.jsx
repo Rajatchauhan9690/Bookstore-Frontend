@@ -10,13 +10,12 @@ import Freebook from "./components/Freebook.jsx";
 import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import { Toaster } from "react-hot-toast";
-
+import ProfileForm from "./components/profile.jsx";
 import "./App.css";
 import { useAuth } from "./context/AuthProvider.jsx";
 function App() {
   const [theme] = useTheme();
   const [authUser, setAuthUser] = useAuth();
-  console.log(authUser);
 
   return (
     <div>
@@ -41,6 +40,7 @@ function App() {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<ProfileForm />} />
       </Routes>
       <Toaster />
     </div>

@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-const SignupPage = () => {
+import axios from "axios";
+import { toast } from "react-hot-toast";
+const Signup = () => {
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -16,11 +18,24 @@ const SignupPage = () => {
 
   const onSubmit = async (data) => {
     const userInfo = {
-      fullname: data.fullname,
+      fullName: data.fullName,
       email: data.email,
       password: data.password,
     };
-    console.log(userInfo);
+    await axios
+      .post("api/v1/register", userInfo)
+      .then((res) => {
+        if (res.data?.user) {
+          localStorage.setItem("Users", JSON.stringify(res.data.user));
+          toast.success("Signup Successfully");
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          toast.error("Error: " + err.response.data.message);
+        }
+      });
   };
   return (
     <div className="flex items-center justify-center min-h-screen ">
@@ -47,7 +62,7 @@ const SignupPage = () => {
                 type="text"
                 className="w-full py-2 bg-transparent focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your name"
-                {...register("fullname", { required: true })}
+                {...register("fullName", { required: true })}
               />
             </div>
 
@@ -59,7 +74,7 @@ const SignupPage = () => {
           </div>
 
           <div>
-            <label className="block mb-1">Email</label>
+            <label className="block mb-1">email</label>
             <div className="flex items-center border border-gray-300 rounded-md px-3">
               <i className="fas fa-envelope text-gray-400 mr-2"></i>
               <input
@@ -114,4 +129,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default Signup;

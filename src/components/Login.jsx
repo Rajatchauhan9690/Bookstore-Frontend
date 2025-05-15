@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-const LoginPage = () => {
-  const navigate = useNavigate(); // Moved to top level
+import axios from "axios";
+import { toast } from "react-hot-toast";
+const Login = () => {
+  const navigate = useNavigate();
   const handleClose = () => {
     navigate("/");
   };
@@ -47,7 +49,6 @@ const LoginPage = () => {
                 type="email"
                 className="w-full py-2 bg-transparent focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your email"
-                autoComplete="off"
                 {...register("email", { required: true })}
               />
             </div>
@@ -63,7 +64,6 @@ const LoginPage = () => {
                 type="password"
                 className="w-full py-2 bg-transparent  focus:outline-none text-sm sm:text-base"
                 placeholder="Enter your password"
-                autoComplete="off"
                 {...register("password", { required: true })}
               />
             </div>
@@ -94,4 +94,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

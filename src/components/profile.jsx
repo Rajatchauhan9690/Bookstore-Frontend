@@ -53,7 +53,7 @@ const ProfileForm = () => {
         });
 
         if (data.profileImage) {
-          setPreview(`http://localhost:3000/uploads/${data.profileImage}`);
+          setPreview(data.profileImage);
         }
       } catch (error) {
         toast.error("Failed to fetch profile");
@@ -118,9 +118,7 @@ const ProfileForm = () => {
         profileImage: updatedUser.profileImage || "",
       });
 
-      setPreview(
-        updatedUser.profileImage ? `/uploads/${updatedUser.profileImage}` : ""
-      );
+      setPreview(updatedUser.profileImage ? updatedUser.ProfileImage : "");
 
       setImageFile(null);
       toast.success("Profile updated successfully");

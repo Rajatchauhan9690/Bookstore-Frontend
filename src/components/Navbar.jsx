@@ -110,23 +110,20 @@ const Navbar = () => {
                   className="w-10 rounded-full"
                   src={
                     authUser && authUser.profileImage
-                      ? `http://localhost:3000/uploads/${authUser.profileImage}`
-                      : "https://tse1.mm.bing.net/th?id=OIP.LpjCGnSs4RBk-z1P2E-WCgHaHa&pid=Api&P=0&h=180"
+                      ? authUser.profileImage
+                      : ""
                   }
                   alt="user"
                   onError={(e) => {
-                    e.currentTarget.onerror = null; // prevent infinite loop
+                    e.currentTarget.onerror = null;
                     e.currentTarget.src =
                       "https://tse1.mm.bing.net/th?id=OIP.LpjCGnSs4RBk-z1P2E-WCgHaHa&pid=Api&P=0&h=180";
                   }}
                 />
-
-                {console.log("authUser:", authUser)}
-                {console.log("profileImage:", authUser?.profileImage)}
               </div>
               <ul
                 tabIndex={0}
-                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-48"
               >
                 <li className="font-semibold px-2">{authUser.fullName}</li>
                 <li>

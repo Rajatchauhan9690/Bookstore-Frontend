@@ -22,7 +22,7 @@ const Contact = () => {
       .then((res) => {
         if (res.data) {
           toast.success("Form submitted Successfully");
-          reset;
+          reset();
         }
       })
       .catch((err) => {

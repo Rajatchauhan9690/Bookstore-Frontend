@@ -6,7 +6,6 @@ import Logout from "./Logout";
 
 const Navbar = () => {
   const [authUser, setAuthUser] = useAuth();
-
   const [sticky, setSticky] = useState(false);
   const [theme, setTheme] = useTheme();
 
@@ -44,28 +43,40 @@ const Navbar = () => {
       }`}
     >
       <div className="navbar">
+        {/* Left Section */}
         <div className="navbar-start">
+          {/* Mobile Hamburger */}
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <i className="fas fa-bars text-xl"></i>
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 w-52 bg-base-100"
             >
               {navItems}
+              {!authUser && (
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+              )}
             </ul>
           </div>
+
+          {/* Brand Logo */}
           <Link to="/" className="text-2xl font-bold cursor-pointer">
             BookStore
           </Link>
         </div>
 
-        <div className="navbar-end space-x-3">
-          <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">{navItems}</ul>
-          </div>
+        {/* Center Section (nav links) */}
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">{navItems}</ul>
+        </div>
 
+        {/* Right Section */}
+        <div className="navbar-end space-x-3">
+          {/* Search */}
           <div className="hidden md:block">
             <label className="px-3 py-1 border rounded-md flex items-center gap-2">
               <input
@@ -77,7 +88,7 @@ const Navbar = () => {
             </label>
           </div>
 
-          {/* Theme Toggle */}
+          {/* Theme toggle */}
           <label className="swap swap-rotate cursor-pointer">
             <input
               type="checkbox"
@@ -85,16 +96,54 @@ const Navbar = () => {
               checked={theme === "light"}
             />
             <i className="fas fa-sun swap-off text-yellow-500 text-2xl"></i>
-
             <i className="fas fa-moon swap-on text-gray-700 text-2xl"></i>
           </label>
 
           {authUser ? (
-            <Logout />
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <img
+                  className="w-10 rounded-full"
+                  src={
+                    authUser && authUser.profileImage
+                      ? `http://localhost:3000/uploads/${authUser.profileImage}`
+                      : "https://tse1.mm.bing.net/th?id=OIP.LpjCGnSs4RBk-z1P2E-WCgHaHa&pid=Api&P=0&h=180"
+                  }
+                  alt="user"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null; // prevent infinite loop
+                    e.currentTarget.src =
+                      "https://tse1.mm.bing.net/th?id=OIP.LpjCGnSs4RBk-z1P2E-WCgHaHa&pid=Api&P=0&h=180";
+                  }}
+                />
+
+                {console.log("authUser:", authUser)}
+                {console.log("profileImage:", authUser?.profileImage)}
+              </div>
+              <ul
+                tabIndex={0}
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              >
+                <li className="font-semibold px-2">{authUser.fullName}</li>
+                <li>
+                  <Link to="/profile">Your Profile</Link>
+                </li>
+                <li>
+                  <Logout />
+                </li>
+              </ul>
+            </div>
           ) : (
-            <div className="navbar-end">
-              <Link to="/login" className="btn text-xl">
+            <div className="hidden lg:flex gap-2">
+              <Link to="/login" className="btn btn-sm text-md">
                 Login
+              </Link>
+              <Link to="/signup" className="btn btn-sm btn-outline text-md">
+                Signup
               </Link>
             </div>
           )}

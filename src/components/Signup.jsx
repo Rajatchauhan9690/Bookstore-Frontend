@@ -115,7 +115,6 @@ const Signup = () => {
                 type="password"
                 className="w-full py-2 bg-transparent focus:outline-none text-sm sm:text-base"
                 placeholder="Create a password"
-                autoComplete="off"
                 {...register("password", {
                   required: "Password is required",
                 })}

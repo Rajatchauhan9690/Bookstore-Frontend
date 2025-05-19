@@ -110,8 +110,8 @@ const Navbar = () => {
                   className="w-10 rounded-full"
                   src={
                     authUser && authUser.profileImage
-                      ? `http://localhost:3000/uploads/${authUser.profileImage}`
-                      : "https://tse1.mm.bing.net/th?id=OIP.LpjCGnSs4RBk-z1P2E-WCgHaHa&pid=Api&P=0&h=180"
+                      ? authUser.profileImageUrl
+                      : ""
                   }
                   alt="user"
                   onError={(e) => {

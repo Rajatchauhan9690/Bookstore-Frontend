@@ -111,7 +111,7 @@ const Navbar = () => {
                   src={
                     authUser && authUser.profileImage
                       ? authUser.profileImageUrl
-                      : ""
+                      : "https://tse1.mm.bing.net/th?id=OIP.LpjCGnSs4RBk-z1P2E-WCgHaHa&pid=Api&P=0&h=180"
                   }
                   alt="user"
                   onError={(e) => {
@@ -120,6 +120,8 @@ const Navbar = () => {
                       "https://tse1.mm.bing.net/th?id=OIP.LpjCGnSs4RBk-z1P2E-WCgHaHa&pid=Api&P=0&h=180";
                   }}
                 />
+                {console.log(authUser.profileImageUrl)}
+                {console.log(authUser)}
               </div>
               <ul
                 tabIndex={0}

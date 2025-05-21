@@ -4,11 +4,22 @@ import useTheme from "../hooks/useTheme";
 import { useAuth } from "../context/AuthProvider";
 import Logout from "./Logout";
 
-const Navbar = () => {
+const Navbar = ({ searchTerm, setSearchTerm }) => {
+  const [inputValue, setInputValue] = useState(searchTerm || "");
   const [authUser, setAuthUser] = useAuth();
   const [sticky, setSticky] = useState(false);
   const [theme, setTheme] = useTheme();
 
+  const handleSearch = (e) => {
+    setInputValue(e.target.value);
+  };
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearchTerm(inputValue);
+    }, 400);
+
+    return () => clearTimeout(handler);
+  }, [inputValue, setSearchTerm]);
   useEffect(() => {
     const handleScroll = () => {
       setSticky(window.scrollY > 0);
@@ -83,6 +94,8 @@ const Navbar = () => {
                 type="text"
                 className="grow outline-none rounded-md px-1"
                 placeholder="Search"
+                value={inputValue}
+                onChange={handleSearch}
               />
               <i className="fas fa-search"></i>
             </label>
@@ -120,8 +133,6 @@ const Navbar = () => {
                       "https://tse1.mm.bing.net/th?id=OIP.LpjCGnSs4RBk-z1P2E-WCgHaHa&pid=Api&P=0&h=180";
                   }}
                 />
-                {console.log(authUser.profileImageUrl)}
-                {console.log(authUser)}
               </div>
               <ul
                 tabIndex={0}

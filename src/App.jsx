@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import useTheme from "./hooks/useTheme.js";
 import Layout from "./components/Layout.jsx";
@@ -13,21 +13,26 @@ import { Toaster } from "react-hot-toast";
 import ProfileForm from "./components/profile.jsx";
 import "./App.css";
 import { useAuth } from "./context/AuthProvider.jsx";
+
 function App() {
   const [theme] = useTheme();
   const [authUser, setAuthUser] = useAuth();
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <div>
-      {" "}
       <Routes>
-        <Route element={<Layout />}>
+        <Route
+          element={
+            <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          }
+        >
           <Route
             path="/"
             element={
               <>
                 <Banner />
-                <Freebook />
+                <Freebook searchTerm={searchTerm} />
               </>
             }
           />

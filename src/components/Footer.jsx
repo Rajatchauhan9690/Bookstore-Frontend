@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <div>
-      <hr />
+      <hr className="mt-6" />
       <footer className="footer footer-horizontal footer-center gap-4 py-6 text-base-content rounded">
         <nav className="grid grid-flow-col gap-4">
           <Link to="/about">About</Link>

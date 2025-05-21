@@ -2,13 +2,13 @@ import React from "react";
 
 function Cards({ item }) {
   return (
-    <div className="my-3 p-3">
-      <div className="bg-base-100 shadow-xl hover:scale-102 duration-200 w-full max-w-md mx-auto rounded-2xl">
+    <div className="my-1 p-1">
+      <div className="bg-base-100 shadow-lg hover:scale-102 duration-200 w-full max-w-md mx-auto rounded-2xl">
         <figure className="pt-4">
           <img
             src={item.image}
             alt={item.name}
-            className="h-auto w-full object-cover sm:h-[300px] md:h-[350px] lg:h-[400px]"
+            className="h-auto w-full object-cover sm:h-[80px] md:h-[150px] lg:h-[200px]"
           />
         </figure>
         <div className="card-body px-4 pb-4">

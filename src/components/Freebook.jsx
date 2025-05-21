@@ -33,7 +33,7 @@ function Freebook({ searchTerm }) {
         </p>
       </div>
 
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-2">
         {filteredBooks.map((item) => (
           <Cards key={item.id} item={item} />
         ))}

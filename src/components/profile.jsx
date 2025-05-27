@@ -12,6 +12,7 @@ const ProfileForm = () => {
     email: "",
     phone: "",
     gender: "",
+    customGender: "", // added here
     address: "",
     profileImage: "",
   });
@@ -48,6 +49,7 @@ const ProfileForm = () => {
           email: data.email || "",
           phone: data.phone || "",
           gender: data.gender || "",
+          customGender: data.customGender || "", // added here
           address: data.address || "",
           profileImage: data.profileImage || "",
         });
@@ -78,7 +80,8 @@ const ProfileForm = () => {
   };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -87,9 +90,15 @@ const ProfileForm = () => {
 
     try {
       const formData = new FormData();
-      ["id", "fullName", "email", "phone", "gender", "address"].forEach((key) =>
-        formData.append(key, form[key])
-      );
+      [
+        "id",
+        "fullName",
+        "email",
+        "phone",
+        "gender",
+        "customGender",
+        "address",
+      ].forEach((key) => formData.append(key, form[key]));
 
       if (imageFile) {
         formData.append("profileImage", imageFile);
@@ -114,6 +123,7 @@ const ProfileForm = () => {
         email: updatedUser.email || "",
         phone: updatedUser.phone || "",
         gender: updatedUser.gender || "",
+        customGender: updatedUser.customGender || "", // update here
         address: updatedUser.address || "",
         profileImage: updatedUser.profileImage || "",
       });
@@ -184,18 +194,71 @@ const ProfileForm = () => {
       </div>
 
       {/* Form Fields */}
-      {["fullName", "email", "phone", "gender", "address"].map((field) => (
+      {/* Replace gender input with dropdown */}
+      <input
+        type="text"
+        name="fullName"
+        value={form.fullName}
+        onChange={handleChange}
+        placeholder="FullName"
+        disabled={!isEditing}
+        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-100"
+      />
+      <input
+        type="email"
+        name="email"
+        value={form.email}
+        onChange={handleChange}
+        placeholder="Email"
+        disabled={!isEditing}
+        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-100"
+      />
+      <input
+        type="text"
+        name="phone"
+        value={form.phone}
+        onChange={handleChange}
+        placeholder="Phone"
+        disabled={!isEditing}
+        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-100"
+      />
+
+      {/* Gender select */}
+      <select
+        name="gender"
+        value={form.gender}
+        onChange={handleChange}
+        disabled={!isEditing}
+        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-100"
+      >
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+        <option value="Prefer Not To Say">Prefer Not To Say</option>
+      </select>
+
+      {/* Conditionally show customGender input if gender is Other */}
+      {isEditing && form.gender === "Other" && (
         <input
-          key={field}
           type="text"
-          name={field}
-          value={form[field]}
+          name="customGender"
+          value={form.customGender}
           onChange={handleChange}
-          placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-          disabled={!isEditing}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-100"
+          placeholder="Please specify"
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
-      ))}
+      )}
+
+      <input
+        type="text"
+        name="address"
+        value={form.address}
+        onChange={handleChange}
+        placeholder="Address"
+        disabled={!isEditing}
+        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-100"
+      />
 
       {/* Action Buttons */}
       <div className="flex justify-between gap-4">

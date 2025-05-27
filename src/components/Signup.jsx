@@ -60,6 +60,7 @@ const Signup = () => {
     const formData = new FormData(); // Declare first
 
     formData.append("fullName", data.fullName);
+    formData.append("dob", data.dob);
     formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("phone", data.phone || "");
@@ -199,6 +200,28 @@ const Signup = () => {
           {/* Step 2 */}
           {step === 2 && (
             <>
+              {/* Date of Birth */}
+              <div>
+                <label className="block mb-1">DOB</label>
+                <div className="flex items-center border border-gray-300 rounded-md px-3">
+                  <i className="fas fa-user text-gray-400 mr-2"></i>
+                  <input
+                    type="date"
+                    max={new Date().toISOString().split("T")[0]} // Disallows future dates
+                    placeholder="Enter your date of birth (YYYY-MM-DD)"
+                    className="w-full py-2 bg-transparent focus:outline-none text-sm sm:text-base"
+                    {...register("dob", {
+                      required: "DOB is required",
+                    })}
+                  />
+                </div>
+                {errors.dob && (
+                  <span className="text-sm text-red-500">
+                    {errors.dob.message}
+                  </span>
+                )}
+              </div>
+
               {/* Password */}
               <div>
                 <label className="block mb-1">Password</label>
